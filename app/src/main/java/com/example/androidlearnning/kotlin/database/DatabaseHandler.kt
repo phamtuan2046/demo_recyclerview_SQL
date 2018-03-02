@@ -33,7 +33,7 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
     override fun onCreate(db: SQLiteDatabase) {
         val CREATE_STUDENT_TABLE = ("CREATE TABLE " + TABLE_STUDENT + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
-                + KEY_AGE + " INTEGER,"
+                + KEY_AGE + " TEXT,"
                 + KEY_GENDER + " INTEGER" + ")")
         db.execSQL(CREATE_STUDENT_TABLE)
     }
@@ -71,7 +71,7 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         val student = Student()
         student.id = Integer.parseInt(cursor!!.getString(0))
         student.name = cursor.getString(1)
-        student.age = Integer.parseInt(cursor!!.getString(2))
+        student.age = cursor.getString(2)
         student.gender = Integer.parseInt(cursor!!.getString(3))
         return student
     }
@@ -92,7 +92,7 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
                 val student = Student()
                 student.id = Integer.parseInt(cursor.getString(0))
                 student.name = cursor.getString(1)
-                student.age = Integer.parseInt(cursor.getString(2))
+                student.age = cursor.getString(2)
                 student.gender = Integer.parseInt(cursor.getString(3))
                 students.add(student)
             } while (cursor.moveToNext())

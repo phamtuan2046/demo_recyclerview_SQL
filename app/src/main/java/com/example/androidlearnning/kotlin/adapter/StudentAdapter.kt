@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.item_student.view.*
 /**
  * Created by FRAMGIA\pham.dinh.tuan on 02/03/2018.
  */
-class StudentAdapter(var context: Context, var students: ArrayList<Student>) : RecyclerView.Adapter<StudentAdapter.StudentViewHolder>() {
+class StudentAdapter(context: Context, var students: ArrayList<Student>) : RecyclerView.Adapter<StudentAdapter.StudentViewHolder>() {
     var infalter: LayoutInflater? = null
 
     init {
@@ -28,10 +28,18 @@ class StudentAdapter(var context: Context, var students: ArrayList<Student>) : R
     }
 
     override fun getItemCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return students.size
     }
+    fun onItemClick(index:Int){
 
+    }
     class StudentViewHolder(var itemview: View) : RecyclerView.ViewHolder(itemview) {
+        init {
+            itemview.setOnClickListener {
+
+            }
+        }
+
         fun bindata(student: Student) {
             if (student.gender == 0) {
                 itemview.imgGender.setImageResource(R.drawable.boy)
@@ -39,9 +47,9 @@ class StudentAdapter(var context: Context, var students: ArrayList<Student>) : R
                 itemview.imgGender.setImageResource(R.drawable.girl)
             }
             if (student.age != null)
-            itemview.tvName.text = student.name
+                itemview.tvName.text = student.name
             if (student.age != null)
-                itemview.tvAge.text = student.age!!.toString()
+                itemview.tvAge.text = student.age!!
         }
     }
 }
