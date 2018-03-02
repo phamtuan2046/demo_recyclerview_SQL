@@ -1,5 +1,6 @@
 package com.example.androidlearnning.kotlin.activities
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.example.androidlearnning.demo.R
@@ -17,16 +18,24 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(toolbar)
+        toolbar.title = "DEMO RECYCLERVIEW AND SQL"
         databaseHandler = DatabaseHandler(this)
         initView()
         getAllStudent()
         fabAdd.setOnClickListener {
-            startActivityForResult(StudentActivity.getCreateIntent(this),100)
+            startActivityForResult(StudentActivity.getCreateIntent(this), 100)
         }
     }
 
     fun initView() {
-        studentAdapter = StudentAdapter(this, students)
+        studentAdapter = StudentAdapter(this, students, { index ->
+            startActivityForResult(StudentActivity.getEditIntent(this, students[index]), 100)
+        }, { index ->
+            databaseHandler?.deleteStudent(students[index])
+            students.removeAt(index)
+            studentAdapter?.notifyItemRemoved(index)
+        })
         rcvStudent.adapter = studentAdapter
     }
 
@@ -38,7 +47,9 @@ class MainActivity : AppCompatActivity() {
             studentAdapter?.notifyDataSetChanged()
         }
     }
-    fun edit(student:Student){
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        getAllStudent()
     }
 }

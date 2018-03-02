@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.item_student.view.*
 /**
  * Created by FRAMGIA\pham.dinh.tuan on 02/03/2018.
  */
-class StudentAdapter(context: Context, var students: ArrayList<Student>) : RecyclerView.Adapter<StudentAdapter.StudentViewHolder>() {
+class StudentAdapter(context: Context, var students: ArrayList<Student>, var onClickItem: (index: Int) -> Unit, var ondelete: (index: Int) -> Unit) : RecyclerView.Adapter<StudentAdapter.StudentViewHolder>() {
     var infalter: LayoutInflater? = null
 
     init {
@@ -24,19 +24,24 @@ class StudentAdapter(context: Context, var students: ArrayList<Student>) : Recyc
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): StudentViewHolder {
-        return StudentViewHolder(infalter!!.inflate(R.layout.item_student, parent, false))
+        return StudentViewHolder(infalter!!.inflate(R.layout.item_student, parent, false), onClickItem,ondelete)
     }
 
     override fun getItemCount(): Int {
         return students.size
     }
-    fun onItemClick(index:Int){
+
+    fun onItemClick(index: Int) {
 
     }
-    class StudentViewHolder(var itemview: View) : RecyclerView.ViewHolder(itemview) {
+
+    class StudentViewHolder(var itemview: View, onClickItem: (index: Int) -> Unit, onDelete: (index: Int) -> Unit) : RecyclerView.ViewHolder(itemview) {
         init {
             itemview.setOnClickListener {
-
+                onClickItem.invoke(adapterPosition)
+            }
+            itemview.btnDelete.setOnClickListener {
+                onDelete.invoke(adapterPosition)
             }
         }
 

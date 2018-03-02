@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
 import com.example.androidlearnning.demo.R
 import com.example.androidlearnning.kotlin.database.DatabaseHandler
 import com.example.androidlearnning.kotlin.models.Student
@@ -57,7 +58,9 @@ class StudentActivity : AppCompatActivity() {
             edAge.setText(mStudent!!.age.toString())
             if (mStudent!!.gender == 0) {
                 rdBoy.isChecked = true
+                rdGirl.isChecked = false
             } else {
+                rdGirl.isChecked = true
                 rdBoy.isChecked = false
             }
         } else {
@@ -66,19 +69,25 @@ class StudentActivity : AppCompatActivity() {
     }
 
     fun processButtonDone() {
+        if (edName.text.toString().isEmpty()) {
+            Toast.makeText(this, "Name not empty", Toast.LENGTH_LONG).show()
+            return
+        }
         if (mStudent != null) {
             mStudent?.name = edName.text.toString()
-            mStudent?.age = edName.text.toString()
+            mStudent?.age = edAge.text.toString()
             if (rdBoy.isChecked) mStudent?.gender = 0
             else mStudent?.gender = 1
             DatabaseHandler?.updateStudent(mStudent!!)
         } else {
             var student = Student()
-            student?.name = edName.text.toString()
-            student?.age = edName.text.toString()
-            if (rdBoy.isChecked) student?.gender = 0
-            else student?.gender = 1
+            student.name = edName.text.toString()
+            student.age = edAge.text.toString()
+            if (rdBoy.isChecked) student.gender = 0
+            else student.gender = 1
             DatabaseHandler?.addStudent(student!!)
         }
+        setResult(1)
+        finish()
     }
 }

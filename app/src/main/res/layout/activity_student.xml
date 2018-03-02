@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:text="Cancel" />
+            android:text="CANCEL" />
 
         <Button
             android:id="@+id/btnDone"
@@ -110,9 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:background="#03A9F4"
-            android:text="UPDATE"
-            android:textColor="#ffff" />
+            android:text="UPDATE" />
     </LinearLayout>
 
 
